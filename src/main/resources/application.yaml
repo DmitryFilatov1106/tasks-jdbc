@@ -1,0 +1,37 @@
+server.port: 8080
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DB}?currentSchema=${POSTGRES_SCHEMA}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:liquibase/db.changelog.yml
+    enabled: true
+    default-schema: ${POSTGRES_SCHEMA}
+#  cache:
+#    type: redis
+#    cache-names: redis-cache
+#  data:
+#    redis:
+#      host: ${REDIS_HOST}
+#      port: 6379
+#      password: ${REDIS_PASSWORD}
+
+security:
+  jwt:
+    secret: ${JWT_SECRET}
+    access: 1
+    refresh: 30
+
+springdoc:
+  override-with-generic-response: false
+
+minio:
+  bucket: ${MINIO_BUCKET}
+  url: ${MINIO_URL}
+  accessKey: ${MINIO_ACCESS_KEY}
+  secretKey: ${MINIO_SECRET_KEY}
